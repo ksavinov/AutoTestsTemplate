@@ -36,8 +36,6 @@ format='[LINE:%(lineno)d] %(asctime)s %(levelname)s %(message)s',
 datefmt='%Y-%m-%d %H:%M:%S',
 level=logging.DEBUG)
 
-# ----------------------------------------
-
 log = logging.getLogger('test.test')
 
 # if importing test data from json:
