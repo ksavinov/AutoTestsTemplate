@@ -25,5 +25,5 @@ def upload_screenshots_to_ticket(self, driver):
     app.connect(title='Open')
     # in uploader select uploading files and
     app.Dialog.Edit0.TypeKeys(
-        r'"your_project\src\data\test_jpg_upload.jpg"', with_spaces=False)
+        r'"AutoTestsTemplate\src\data\test_jpg_upload.jpg"', with_spaces=False)
     app.Dialog.Edit0.TypeKeys('{ENTER}')

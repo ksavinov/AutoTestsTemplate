@@ -22,6 +22,7 @@ import smtplib
 from smtplib import SMTP_SSL
 import logging
 from datetime import datetime
+import MySQLdb
 
 sep='\uA789' # instead of ":", which is not supported in Windows file names
 now = lambda: datetime.now().strftime("%Y-%m-%d_%H:%M:%S").replace(':', sep) # ISO_8601: YYYY-MM-DD
@@ -45,7 +46,6 @@ data_file = open(os.path.abspath(os.path.join(os.getcwd(), '..', 'data', 'test_u
 data = json.loads(data_file.read())
 
 # select user login from db
-import MySQLdb
 try:
     conn = MySQLdb.connect(host="localhost", user="username",
                            passwd="password", db="dbname", charset='utf8')
@@ -242,6 +242,7 @@ def pytest_runtest_makereport(item, call):
         report.extra = extra
 
 def pytest_sessionfinish(session, exitstatus):
+    current_time = time.time()
     # delete screenshots created over 31 days ago
     os.chdir('..')
     os.chdir('screenshots')
@@ -249,7 +250,7 @@ def pytest_sessionfinish(session, exitstatus):
         creation_time = os.path.getctime(f)
         if (current_time - creation_time) // (24 * 3600) > 31:
             os.unlink(f)
-            log.debug('{} удален'.format(f))
+            log.debug('{} deleted'.format(f))
 
     # delete logs created over 31 days ago
     os.chdir('..')
@@ -258,7 +259,7 @@ def pytest_sessionfinish(session, exitstatus):
         creation_time = os.path.getctime(f)
         if (current_time - creation_time) // (24 * 3600) > 31:
             os.unlink(f)
-            log.debug('{} удален'.format(f))
+            log.debug('{} deleted'.format(f))
 
     # delete reports created over 31 days ago
     os.chdir('..')
@@ -267,7 +268,7 @@ def pytest_sessionfinish(session, exitstatus):
         creation_time = os.path.getctime(f)
         if (current_time - creation_time) // (24 * 3600) > 31:
             os.unlink(f)
-            log.debug('{} удален'.format(f))
+            log.debug('{} deleted'.format(f))
 
     # send notifications to e-mail about FAILED and PASSED test suites
     if exitstatus != 0:
