@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from common import *
 
-
 @pytest.mark.usefixtures('unauthorized_driver')
 class TestSuite(ChromeTest):
     def test_case_one(self, driver):
